@@ -1,0 +1,340 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">折线图</div>
+        <div class="panel-body">
+            <div id="a1" style="width: 100%;height: 400px">
+
+            </div>
+        </div>
+    </div>
+</div><br/>
+
+        <div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">柱状图</div>
+        <div class="panel-body">
+            <div id="a2" style="width: 100%;height: 400px">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/echarts.js' %}"></script>
+    <script type="application/javascript">
+    $(function () {
+        line();
+        bar();
+    })
+
+    function line() {
+        var chartDom = document.getElementById('a1');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        option = {
+            color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+            title: {
+                text: '产品营业额分析'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            legend: {
+                data: ['酒水', '婚车', '鲜花', '蛋糕', '摄影']
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '酒水',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0
+                    },
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {
+                                offset: 0,
+                                color: 'rgb(128, 255, 165)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgb(1, 191, 236)'
+                            }
+                        ])
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [140, 232, 101, 264, 90, 340, 250]
+                },
+                {
+                    name: '婚车',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0
+                    },
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {
+                                offset: 0,
+                                color: 'rgb(0, 221, 255)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgb(77, 119, 255)'
+                            }
+                        ])
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [120, 282, 111, 234, 220, 340, 310]
+                },
+                {
+                    name: '鲜花',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0
+                    },
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {
+                                offset: 0,
+                                color: 'rgb(55, 162, 255)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgb(116, 21, 219)'
+                            }
+                        ])
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [320, 132, 201, 334, 190, 130, 220]
+                },
+                {
+                    name: '蛋糕',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0
+                    },
+                    showSymbol: false,
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {
+                                offset: 0,
+                                color: 'rgb(255, 0, 135)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgb(135, 0, 157)'
+                            }
+                        ])
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [220, 402, 231, 134, 190, 230, 120]
+                },
+                {
+                    name: '摄影',
+                    type: 'line',
+                    stack: 'Total',
+                    smooth: true,
+                    lineStyle: {
+                        width: 0
+                    },
+                    showSymbol: false,
+                    label: {
+                        show: true,
+                        position: 'top'
+                    },
+                    areaStyle: {
+                        opacity: 0.8,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {
+                                offset: 0,
+                                color: 'rgb(255, 191, 0)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgb(224, 62, 76)'
+                            }
+                        ])
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [220, 302, 181, 234, 210, 290, 150]
+                }
+            ]
+        };
+
+        option && myChart.setOption(option);
+
+    }
+
+    function bar() {
+
+        var ROOT_PATH =
+            'https://fastly.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
+
+        var chartDom = document.getElementById('a2');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        myChart.showLoading();
+        $.get(
+            ROOT_PATH + '/data/asset/data/obama_budget_proposal_2012.list.json',
+            function (obama_budget_2012) {
+                myChart.hideLoading();
+                option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow',
+                            label: {
+                                show: true
+                            }
+                        }
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            magicType: {show: true, type: ['line', 'bar']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    calculable: true,
+                    legend: {
+                        data: ['Growth', 'Budget 2020', 'Budget 2021'],
+                        itemGap: 5
+                    },
+                    grid: {
+                        top: '12%',
+                        left: '1%',
+                        right: '10%',
+                        containLabel: true
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            data: obama_budget_2012.names
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            name: '预算 (美元)',
+                            axisLabel: {
+                                formatter: function (a) {
+                                    a = +a;
+                                    return isFinite(a) ? echarts.format.addCommas(+a / 1000) : '';
+                                }
+                            }
+                        }
+                    ],
+                    dataZoom: [
+                        {
+                            show: true,
+                            start: 94,
+                            end: 100
+                        },
+                        {
+                            type: 'inside',
+                            start: 94,
+                            end: 100
+                        },
+                        {
+                            show: true,
+                            yAxisIndex: 0,
+                            filterMode: 'empty',
+                            width: 30,
+                            height: '80%',
+                            showDataShadow: false,
+                            left: '93%'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: 'Budget 2020',
+                            type: 'bar',
+                            data: obama_budget_2012.budget2011List
+                        },
+                        {
+                            name: 'Budget 2021',
+                            type: 'bar',
+                            data: obama_budget_2012.budget2012List
+                        }
+                    ]
+                };
+                myChart.setOption(option);
+            }
+        );
+
+        option && myChart.setOption(option);
+
+
+    }
+
+
+
+    </script>
+
+{% endblock %}

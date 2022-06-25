@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+{#面板#}
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">管理员管理</div>
+        <div class="panel-body">
+            <a href="/admin/add/" class="btn btn-success">新建管理员</a>
+        </div>
+    </div>
+    <div>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">姓名</th>
+                <th scope="col">密码</th>
+                <th scope="col">重置密码</th>
+                <th scope="col">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for foo in queryset %}
+                    <tr>
+                        <td>{{ foo.id }}</td>
+                        <td>{{ foo.adminname }}</td>
+                        <td>{{ foo.password }}</td>
+                        <td>
+                            <a href="/admin/{{ foo.id }}/reset/">重置密码</a>
+                        </td>
+                        <td>
+                            <a href="/admin/{{ foo.id }}/edit/" class="btn btn-primary btn-xs">编辑</a>
+                            <a href="/admin/{{ foo.id }}/delete/" class="btn btn-danger btn-xs">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+{% endblock %}

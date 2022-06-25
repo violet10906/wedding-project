@@ -1,0 +1,181 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+
+{#    显示数据#}
+    <div class="container">
+
+
+        <div class="panel panel-default">
+        <div class="panel-heading">订单表</div>
+        <div class="panel-body">
+             <button id="orderAdd" class="btn btn-primary">新建订单</button>
+        </div>
+    </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">订单号</th>
+                    <th scope="col">姓名</th>
+                    <th scope="col">婚礼日期</th>
+                    <th scope="col">婚礼地址</th>
+                    <th scope="col">联系电话</th>
+                    <th scope="col">支付状态</th>
+                    <th scope="col">级别</th>
+                    <th scope="col">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for foo in queryset %}
+                    <tr>
+                        <td>{{ foo.oid }}</td>
+                        <td>{{ foo.name }}</td>
+                        <td>{{ foo.datatime}}</td>
+                        <td>{{ foo.address }}</td>
+                        <td>{{ foo.phone}}</td>
+                        <td>{{ foo.get_status_choice_display }}</td>
+                        <td>{{ foo.get_level_choice_display }}</td>
+                        <td>
+{#                            <input nid="{{ foo.id }}" class="btn btn-primary btn-xs btn-edit" type="button" value="编辑">#}
+                            <input nid="{{ foo.id }}" class="btn btn-danger btn-xs btn-delete" value="删除" type="button">
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{#    弹出新建框#}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">新建订单</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="addFrom" novalidate>
+                        <div class="clearfix">
+                            {% for item in form %}
+                                <div class="col-xs-12">
+                                    <div class="form-group" style="position: relative">
+                                        <label>{{ item.label }}</label>
+                                        {{ item }}
+                                        <span class="error_msg" style="color: red;position: absolute"></span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id="btnSave" type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{#    删除框#}
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+
+            <div class="alert alert-danger" role="alert">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">确认是否删除？</h4>
+                    </div>
+                    <div class="modal-body">
+                        删除后，关联数据都会被删除
+                    </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" id="btnConfire">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+{% block js %}
+    <script type="application/javascript">
+    var DELETE_ID;
+    $(function () {
+        bindBtnAddEvent();
+        bindBtnSaveEvent();
+        bindBtnDeleteEvent();
+        bindBtnConfireEvent();
+    })
+
+    function bindBtnAddEvent() {
+        $("#orderAdd").click(function () {
+            $("#myModal").modal("show");
+        });
+    }
+    function bindBtnSaveEvent() {
+        $("#btnSave").click(function () {
+            {#清除错误信息#}
+            $("#error_msg").empty()
+            {#向后台发送数据#}
+            $.ajax({
+                url: "/order/add/",
+                type: "post",
+                data: $("#addFrom").serialize(),
+                dataType: "JSON",
+                success: function (res) {
+                    if (res.status) {
+                        {#    清空表单错误信息#}
+                        $("#addFrom")[0].reset();
+                        {#隐藏表单#}
+                        $("#myModal").modal("hide");
+                        {#    自动刷新显示数据#}
+                        location.reload();
+                    } else {
+                        $.each(res.error, function (name, errorList) {
+                            $("#id_" + name).next().text(errorList)[0]
+                        })
+                    }
+                }
+            })
+        });
+    }
+
+    function bindBtnDeleteEvent() {
+        $(".btn-delete").click(function () {
+            $("#deleteModal").modal("show");
+            DELETE_ID=$(this).attr("nid");
+        })
+    }
+
+    function bindBtnConfireEvent() {
+        $("#btnConfire").click(function () {
+            $.ajax({
+                url:"/order/delete/",
+                type: "get",
+                data:{
+                    nid:DELETE_ID
+                },
+                dataType: "JSON",
+                success:function (res) {
+                    if (res.status){
+                        location.reload();
+                    }
+                    else{
+                        alert(res.error)
+                    }
+
+                }
+            })
+
+        })
+
+    }
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container">
+        <form enctype="multipart/form‐data" method="post">
+            {% csrf_token %}
+            <input type="text" name="username"><br><br>
+            <input type="file" name="avatar"><br>
+            <input type="submit" value="提交">
+        </form>
+
+        <br><br><br>
+        <div class="panel panel‐default">
+            <div class="panel‐heading">批量上传</div>
+            <div class="panel‐body">
+
+                <form method="post" enctype="multipart/form‐data" action="/depart/multi/">
+                    {% csrf_token %}
+                    <input type="file" name="exc">
+                    <br><br>
+                    <input type="submit" value="上传" class="btn btn‐info">
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>婚庆管理系统</title>
+    <style type="text/css">
+        body {
+            background: #fff url({% static 'img/qq.jpg' %}) no-repeat left top;
+            background-size: 100%;
+        }
+    </style>
+
+
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.css' %}">
+</head>
+<body>
+
+{#导航栏#}
+<div>
+    <nav class="navbar navbar-default" style="background: #b2dba1">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/service/show/">婚庆公司管理系统</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">功能管理<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/work/list/">员工资料</a></li>
+                            <li><a href="/carcer/list/">部门管理</a></li>
+                            <li><a href="/admin/list/">管理员管理</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/hotel/list/">酒席婚庆管理</a></li>
+                    <li><a href="/order/list/">客户信息管理</a></li>
+                    <li><a href="/service/list/">婚车管理</a></li>
+                    <li><a href="/chart/list/">数据管理</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li><a href="/lagout/" class="glyphicon glyphicon-off " style="margin-right: 80px">退出登录</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="caret">{{ request.session.info.name }}</span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/info/people/">个人信息</a></li>
+                            <li><a href="#">资料管理</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+</div>
+
+{% block content %}{% endblock %}
+
+<script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1-dist/js/bootstrap.js' %}"></script>
+
+
+{% block js %}{% endblock %}
+</body>
+</html>

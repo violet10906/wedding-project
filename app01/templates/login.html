@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <title></title>
+
+        <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1-dist/css/bootstrap.css' %}">
+      <style>
+         .account{
+             background: #ffffff;
+            width: 400px;
+             height: 600px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            box-shadow: 5px 5px 20px #aaa;
+
+            margin-left: 50px;
+            margin-right: auto;
+            margin-top: 100px;
+            padding: 20px 40px;
+         }
+         .account h2{
+            margin-top: 10px;
+            text-align: center;
+         }
+         body {
+             background: #fff url({% static 'img/home.jpg' %}) no-repeat left top;
+             background-size: 100%;
+         }
+
+      </style>
+
+   </head>
+
+   <body>
+
+   <div class="account">
+       <h2>用户登录</h2>
+       <form method="post" novalidate>
+           {% csrf_token %}
+           <div class="form-group">
+               <label>用户名</label>
+               {{ form.adminname }}
+               <span style="color: red">{{ form.adminname.errors.0 }}</span>
+           </div>
+           <div class="form-group">
+               <label>密码</label>
+               {{ form.password }}
+               <span style="color: red">{{ form.password.errors.0 }}</span>
+           </div>
+
+           <div class="form-group">
+               <label for="id_code">图片验证码</label>
+               <div class="row">
+                   <div class="col-xs-7">
+                       {{ form.code }}
+                       <span style="color: red;">{{ form.password.errors.0 }}</span>
+                   </div>
+                   <div class="col-xs-5">
+                       <img id="image_code" src="/image/code/">
+                   </div>
+               </div>
+           </div>
+           <input type="submit" value="登  录" class="btn btn-lg btn-primary" style="width: 330px;margin-top: 30px"/>
+
+           <a href="/register">
+               <span class="btn btn-default" style="margin-top: 15px;width: 330px;line-height: 30px">注册</span>
+           </a>
+
+       </form>
+   </div>
+
+
+   </body>
+</html>

@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+    {#搜索框#}
+
+
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">婚车表</div>
+            <div class="panel-body">
+                <a href="/service/add/" class="btn btn-success">添加婚车</a>
+                <div style="float: right;width: 200px">
+                    <form method="get">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="请输入车的品牌"
+                                   value="{{ search_data }}">
+                            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">数量</th>
+                <th scope="col">品牌</th>
+                <th scope="col">价格</th>
+                <th scope="col">状态</th>
+                <th scope="col">颜色</th>
+                <th scope="col">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for foo in queryset %}
+                <tr>
+                    <td>{{ foo.id }}</td>
+                    <td>{{ foo.num }}</td>
+                    <td>{{ foo.typeCar }}</td>
+                    <td>{{ foo.price }}</td>
+                    <td>{{ foo.get_status_choice_display }}</td>
+                    <td>{{ foo.colour }}</td>
+                    <td>
+                        <a href="/service/{{ foo.id }}/edit/" class="btn btn-primary btn-xs">编辑</a>
+                        <a href="/service/{{ foo.id }}/delete/" class="btn btn-danger btn-xs">删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="clearfix" style="margin-left: 520px">
+        <ul class="pagination" style="float: left">
+            {{ page_string }}
+            <li>
+                <form method="get" style="float: left;margin-left: -1px">
+                    <div class="input-group" style="width: 120px">
+                        <input type="text" class="form-control" name="page" placeholder="页码" value="" required
+                               style="position:relative;float: left;display: inline-block;width: 80px;border-radius: 0;">
+                        <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">跳转</button>
+                                </span>
+                    </div>
+                </form>
+            </li>
+        </ul>
+    </div>
+    </div>
+    </div>
+{% endblock %}
